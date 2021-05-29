@@ -71,13 +71,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'djangoProject.wsgi.application'
 
 
-# Database
+# Configurações de bancos de dados padrão, alterado de sqlit3 para mysql
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ateliware_test',
+        'USER': 'root',
+        'PASSWORD': 'me_contrate',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
