@@ -11,6 +11,8 @@ class GitAPI:
         Initializes the class with local (self) variables
         """
         self.git_api = Github()
+        self.tb_repo = TbGitRepository
+        self.tb_lang = TbLanguages.objects.all()
 
     def cad_or_up_repo(self):
         """
@@ -36,7 +38,7 @@ class GitAPI:
                              'repo_up_at': repository.updated_at}
 
                 # Verifies if current repository is registered on database and update or create
-                obj, created = TbGitRepository.objects.update_or_create(repo_name=repository.name,
+                obj, created = self.tb_repo.objects.update_or_create(repo_name=repository.name,
                                                                         defaults=dict_repo)
 
                 if created:  # If it was created, otherwise it updates existent register
@@ -52,3 +54,6 @@ class GitAPI:
         Input: None
         Output: List
         """
+        all_repositories = self.tb_repo.objects.all()
+
+        return all_repositories
