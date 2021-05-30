@@ -1,95 +1,98 @@
+{% load static %}
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    </head>
+    <body>
+        <div class="container" style="align-content: center">
+            <div class="row mb-4">
+               <div class="col-lg-8 mx-auto text-center" >
+                   <img src="{% static 'img/ateliware_logo.png' %}">
+                   <h1 class="display-4"><b>Encontrar Projetos incríveis Em: CSS, HTML, Python, JS e Flutter</b></h1>
+               </div>
+            </div>
 
-    <div class="row mb-4">
-      <div class="col-lg-8 mx-auto text-center" >
-        <h1 class="display-4"><b>Encontrar Projetos incríveis Em: CSS, HTML, Python, JS e Flutter</b></h1>
-      </div>
-    </div>
-
-    <!-- First Table: New Github repositories -->
-    <div class="row"  style="justify-content: center;" >
-        <div class="container mb-4 mt-4" style="max-width: 65vw ; font-size: 12px;border-radius: 10%;">
-            <h3 class="title-3">Os cinco Repositórios mais incríveis do momento!</h3>
-            <table id = "tb_nw_repo" class=" table-responsive text-nowrap table-sm nw_repo_datatable table table-bordered"  style="border-radius: 10px; padding: 0%; " >
-                <thead>
-                    <tr id = "header">
-                        {% if header %}
-                            {% for h in header %}
-                                <th scope="col" style="text-align: center; font-size: 1px; color: red; background-color: rgb(233, 160, 3);">{{ h }}</th>
-                            {% endfor %}
-                        {% endif %}
-                    </tr>
-                </thead>
-                <tbody id = "nw_data">
-                    {% if sis %}
-                        {% for rw in sis %}
-                            <tr>
-                                {% for dt in rw %}
-                                    <td style="text-align:center; max-width:25vw; min-width: 3vw;background-color: rgb(238, 238, 238);">{{dt}}</td>
-                                {% endfor %}
+            <!-- First Table: New Github repositories -->
+            <div class="row"  style="justify-content: center;" >
+                <div class="container mb-4 mt-4" style="max-width: 65vw ; font-size: 12px;border-radius: 10%;">
+                    <h3 class="title-3" style="align-content: center">Os cinco Repositórios mais incríveis do momento!</h3>
+                    <table id = "tb_nw_repo" class=" table-responsive text-nowrap table-sm nw_repo_datatable table table-bordered"  style="border-radius: 10px; padding: 0%; " >
+                        <thead>
+                            <tr id = "header">
+                                {% if header %}
+                                    {% for h in header %}
+                                        <th scope="col" style="text-align: center; font-size: 1px; color: red; background-color: rgb(233, 160, 3);">{{ h }}</th>
+                                    {% endfor %}
+                                {% endif %}
                             </tr>
-                        {% endfor %}
-                    {% endif %}
-                </tbody>
-                <tfoot class="thead-light">
-                    <tr id = "footer">
-                        {% if header %}
-                            {% for h in header %}
-                                <th scope="col" style="text-align: center; background-color: rgb(255, 255, 255);" >{{ h }}</th>
-                            {% endfor %}
-                        {% endif %}
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
-    <br>
-    <!-- Second Table: registered Github repositories -->
-    <div class="row"  style="justify-content: center;" >
-        <div class="container mb-4 mt-4" style="max-width: 65vw ; font-size: 12px;border-radius: 10%;">
-            <h3 class="title-3">Repositórios já cadastrados :)</h3>
-            <table id = "tb_repo" class=" table-responsive text-nowrap table-sm repo_datatable table table-bordered"  style="border-radius: 10px; padding: 0%; " >
-                <thead>
-                    <tr id = "header_repo">
-                        {% if header %}
-                            {% for h in header %}
-                                <th scope="col" style="text-align: center; font-size: 1px; color: red; background-color: rgb(233, 160, 3);">{{ h }}</th>
-                            {% endfor %}
-                        {% endif %}
-                    </tr>
-                </thead>
-                <tbody id = "old_data">
-                    {% if sis %}
-                        {% for rw in sis %}
-                            <tr>
-                                {% for dt in rw %}
-                                    <td style="text-align:center; max-width:25vw; min-width: 3vw;background-color: rgb(238, 238, 238);">{{dt}}</td>
+                        </thead>
+                        <tbody id = "nw_data">
+                            {% if sis %}
+                                {% for rw in sis %}
+                                    <tr>
+                                        {% for dt in rw %}
+                                            <td style="text-align:center; max-width:25vw; min-width: 3vw;background-color: rgb(238, 238, 238);">{{dt}}</td>
+                                        {% endfor %}
+                                    </tr>
                                 {% endfor %}
+                            {% endif %}
+                        </tbody>
+                        <tfoot class="thead-light">
+                            <tr id = "footer">
+                                {% if header %}
+                                    {% for h in header %}
+                                        <th scope="col" style="text-align: center; background-color: rgb(255, 255, 255);" >{{ h }}</th>
+                                    {% endfor %}
+                                {% endif %}
                             </tr>
-                        {% endfor %}
-                    {% endif %}
-                </tbody>
-                <tfoot class="thead-light">
-                    <tr id = "footer_repo">
-                        {% if header %}
-                            {% for h in header %}
-                                <th scope="col" style="text-align: center; background-color: rgb(255, 255, 255);" >{{ h }}</th>
-                            {% endfor %}
-                        {% endif %}
-                    </tr>
-                </tfoot>
-            </table>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <!-- Second Table: registered Github repositories -->
+            <div class="row"  style="justify-content: center;" >
+                <div class="container mb-4 mt-4" style="max-width: 65vw ; font-size: 12px;border-radius: 10%;">
+                    <h3 class="title-3">Repositórios já cadastrados :)</h3>
+                    <table id = "tb_repo" class=" table-responsive text-nowrap table-sm repo_datatable table table-bordered"  style="border-radius: 10px; padding: 0%; " >
+                        <thead>
+                            <tr id = "header_repo">
+                                {% if header %}
+                                    {% for h in header %}
+                                        <th scope="col" style="text-align: center; font-size: 1px; color: red; background-color: rgb(233, 160, 3);">{{ h }}</th>
+                                    {% endfor %}
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody id = "old_data">
+                            {% if sis %}
+                                {% for rw in sis %}
+                                    <tr>
+                                        {% for dt in rw %}
+                                            <td style="text-align:center; max-width:25vw; min-width: 3vw;background-color: rgb(238, 238, 238);">{{dt}}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                        <tfoot class="thead-light">
+                            <tr id = "footer_repo">
+                                {% if header %}
+                                    {% for h in header %}
+                                        <th scope="col" style="text-align: center; background-color: rgb(255, 255, 255);" >{{ h }}</th>
+                                    {% endfor %}
+                                {% endif %}
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
-
-</body>
+    </body>
 </html>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
