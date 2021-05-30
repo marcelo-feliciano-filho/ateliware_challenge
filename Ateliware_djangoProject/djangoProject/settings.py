@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'ateliware_git_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,17 +72,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'djangoProject.wsgi.application'
 
 
-# Configurações de bancos de dados padrão, alterado de sqlit3 para mysql
+# Configurações de bancos de dados padrão, alterado de sqlit3 para postgresql
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ateliware_test',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'db_ateliware_challenge',
         'USER': 'root',
-        'PASSWORD': 'me_contrate',
+        'PASSWORD': 'MA24@lu08',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '5432',
     }
 }
 
