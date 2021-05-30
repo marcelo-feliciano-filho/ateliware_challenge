@@ -6,13 +6,22 @@ from django.views import View
 
 # Creating our views here!
 class ViewRepositories(View):
+    """
+    This class creates the view to application
+    """
 
     def get(self, request):
-        all_repos = GitAPI().get_all_repo()
-        return render(request, 'templates/ateliware_repos.html', {'repositores': all_repos})
+        git_api_class = GitAPI()
+        all_repos = git_api_class.get_all_repo()
+        dict_data = {'repositores': all_repos, 'header': git_api_class.tb_repo.field_names}
+        return render(request, 'ateliware_repos.html', dict_data)
 
 
 def update_repo_by_ajax(request):
+    """
+    Such function aims to return a JsonResponse to ajax.done() method in order to update
+    datatables on html.
+    """
     git_api_class = GitAPI()
     new_repos = git_api_class.cad_or_up_repo()
     all_repos = git_api_class.get_all_repo()

@@ -1,5 +1,5 @@
 # Imports necessary tables and Github API class
-from models import TbLanguages, TbGitRepository
+from .models import TbLanguages, TbGitRepository
 from github import Github
 # PyGitHub documentation: https://pygithub.readthedocs.io/en/latest/index.html
 

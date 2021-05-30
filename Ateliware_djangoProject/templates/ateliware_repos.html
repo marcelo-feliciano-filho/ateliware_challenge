@@ -3,8 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 </head>
 <body>
 
+    <div class="row mb-4">
+      <div class="col-lg-8 mx-auto text-center" >
+        <h1 class="display-4"><b>Encontrar Projetos incríveis Em: CSS, HTML, Python, JS e Flutter</b></h1>
+      </div>
+    </div>
+
+    <!-- First Table: New Github repositories -->
+    <div class="row"  style="justify-content: center;" >
+        <div class="container mb-4 mt-4" style="max-width: 65vw ; font-size: 12px;border-radius: 10%;">
+            <h3 class="title-3">Os cinco Repositórios mais incríveis do momento!</h3>
+            <table id = "tb_nw_repo" class=" table-responsive text-nowrap table-sm nw_repo_datatable table table-bordered"  style="border-radius: 10px; padding: 0%; " >
+                <thead>
+                    <tr id = "header">
+                        {% if header %}
+                            {% for h in header %}
+                                <th scope="col" style="text-align: center; font-size: 1px; color: red; background-color: rgb(233, 160, 3);">{{ h }}</th>
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody id = "nw_data">
+                    {% if sis %}
+                        {% for rw in sis %}
+                            <tr>
+                                {% for dt in rw %}
+                                    <td style="text-align:center; max-width:25vw; min-width: 3vw;background-color: rgb(238, 238, 238);">{{dt}}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+                <tfoot class="thead-light">
+                    <tr id = "footer">
+                        {% if header %}
+                            {% for h in header %}
+                                <th scope="col" style="text-align: center; background-color: rgb(255, 255, 255);" >{{ h }}</th>
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <br>
+    <!-- Second Table: registered Github repositories -->
+    <div class="row"  style="justify-content: center;" >
+        <div class="container mb-4 mt-4" style="max-width: 65vw ; font-size: 12px;border-radius: 10%;">
+            <h3 class="title-3">Repositórios já cadastrados :)</h3>
+            <table id = "tb_repo" class=" table-responsive text-nowrap table-sm repo_datatable table table-bordered"  style="border-radius: 10px; padding: 0%; " >
+                <thead>
+                    <tr id = "header_repo">
+                        {% if header %}
+                            {% for h in header %}
+                                <th scope="col" style="text-align: center; font-size: 1px; color: red; background-color: rgb(233, 160, 3);">{{ h }}</th>
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody id = "old_data">
+                    {% if sis %}
+                        {% for rw in sis %}
+                            <tr>
+                                {% for dt in rw %}
+                                    <td style="text-align:center; max-width:25vw; min-width: 3vw;background-color: rgb(238, 238, 238);">{{dt}}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+                <tfoot class="thead-light">
+                    <tr id = "footer_repo">
+                        {% if header %}
+                            {% for h in header %}
+                                <th scope="col" style="text-align: center; background-color: rgb(255, 255, 255);" >{{ h }}</th>
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
 </body>
 </html>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+
+    var table_nw = $('#tb_repo').DataTable({
+        "language": {
+                "lengthMenu": " Apresentar  _MENU_ linhas por página.",
+                "zeroRecords": "Não há registros",
+                "info": "Mostrando a página _PAGE_ de _PAGES_",
+                "infoEmpty": "Mostrado 0 para 0 de 0 entradas",
+                "search": "Pesquisar:",
+                "paginate":{
+                "next": "Próximo",
+                "previous":"Anterior",
+                },
+                "infoFiltered": "(Filtrando de   _MAX_ registros)",
+            }
+        });
+
+    table_pipe.columns().every( function () {
+        var that = this;
+        $('input', this.header() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that.search( this.value ).draw();
+            }
+        });
+    });
+
+
+    $('.repo_datatable thead th').each( function (){
+        var title = $(this).text();
+        var input = document.querySelectorAll('input');
+            for(i=0; i<input.length; i++){
+                if((input[i].getAttribute('placeholder').length-3)<=0)
+                    input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-1));
+                else
+                    input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-3));
+
+            }
+        $(this).html('<input class="form-control" type="text" placeholder="'+title+'"/>');
+    });
+
+</script>
+
