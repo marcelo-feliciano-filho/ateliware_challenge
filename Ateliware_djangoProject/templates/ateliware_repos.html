@@ -161,7 +161,6 @@
     update_dt_table('tb_nw_repo')  // Initializes tb_repo with data for tb_nw_repo
     configure_tables()
 
-
     // JS responsible by creating ajax requisition to back-end
     function get_repos(){
 
@@ -175,8 +174,8 @@
                     data: {'lang': JSON.stringify({'list_lang': list_lang}),
                            'csrfmiddlewaretoken': '{{ csrf_token|safe }}'},
             }).done(function (data){
-                    repositories_dt = data['repositories'];
-                    new_repositories = data['new_found'];
+                    repositories_dt = data['repositories'];  // Updates global js variable with all repositories data
+                    new_repositories = data['new_found'];  // Updates global js variable with new repositories data
                     update_dt_table('tb_repo')  // Initializes tb_repo with data for tb_repo
                     update_dt_table('tb_nw_repo')  // Initializes tb_repo with data for tb_nw_repo
                     configure_tables()  // reconfigures tables

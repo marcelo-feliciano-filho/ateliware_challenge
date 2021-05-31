@@ -40,7 +40,7 @@ class GitAPI:
                                  'repo_url': repository.url,
                                  'repo_stars': repository.stargazers_count,
                                  'repo_commits': repository.get_commits().totalCount,
-                                 'repo_whatchers': repository.watchers_count,
+                                 'repo_watchers': repository.watchers_count,
                                  'repo_branches': repository.get_branches().totalCount,
                                  'repo_forks': repository.get_forks().totalCount,
                                  'repo_issues': repository.open_issues_count,
@@ -61,7 +61,6 @@ class GitAPI:
         A method that returns all registered repositories
         Input: None
         Output: List
+            list containing all repositories and their metadata
         """
-        all_repositories = [repo for repo in self.tb_repo.objects.all().values_list()]
-
-        return all_repositories
+        return [repo for repo in self.tb_repo.objects.all().values_list()]
