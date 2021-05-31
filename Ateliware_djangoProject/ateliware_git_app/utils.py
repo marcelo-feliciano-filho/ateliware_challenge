@@ -1,4 +1,4 @@
-from models import TbLanguages
+from .models import TbLanguages
 
 
 def register_languages():

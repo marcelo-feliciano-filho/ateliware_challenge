@@ -12,13 +12,13 @@ class GitAPI:
         """
         self.git_api = Github()
         self.tb_repo = TbGitRepository
-        self.tb_lang = TbLanguages.objects.all()
+        self.tb_lang = TbLanguages
 
     def cad_or_up_repo(self):
         """
         This method finds five repositories (one by language)
         """
-        languages = TbLanguages.objects.all()
+        languages = self.tb_lang.objects.all()
         search_five = list()  # Creates a list to store five objects from Github API
         for lang in languages:
 
@@ -38,8 +38,7 @@ class GitAPI:
                              'repo_up_at': repository.updated_at}
 
                 # Verifies if current repository is registered on database and update or create
-                obj, created = self.tb_repo.objects.update_or_create(repo_name=repository.name,
-                                                                        defaults=dict_repo)
+                obj, created = self.tb_repo.objects.update_or_create(repo_name=repository.name, defaults=dict_repo)
 
                 if created:  # If it was created, otherwise it updates existent register
                     search_five.append(dict_repo)  # appends dict_repo to search list

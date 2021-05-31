@@ -78,8 +78,8 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db_ateliware_challenge',
-        'USER': 'root',
+        'NAME': 'db_ateliware',
+        'USER': 'postgres',
         'PASSWORD': 'MA24@lu08',
         'HOST': 'localhost',
         'PORT': '5432',

@@ -21,7 +21,7 @@ from ateliware_git_app.views import ViewRepositories
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ateliware/', ViewRepositories.as_view(), name='ateliware'),
+    path('', ViewRepositories.as_view(), name='ateliware'),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
