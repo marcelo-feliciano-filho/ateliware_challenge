@@ -6,24 +6,7 @@
         <meta charset="UTF-8">
         <title>Hire Me!</title>
 
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js-bootstrap-css/1.2.1/typeaheadjs.min.css"  rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" rel="stylesheet">
-        <style>
-            body{ font-family:calibri;}
-            .twitter-typeahead { display:initial !important; }
-            .bootstrap-tagsinput {line-height:40px;display:block !important;}
-            .bootstrap-tagsinput .tag {background:#EF0044 ;padding:5px;border-radius:4px;}
-            .tt-hint {top:2px !important;}
-            .tt-input{vertical-align:baseline !important;}
-            .typeahead { border: 1px solid #CCCCCC;border-radius: 4px;padding: 8px 12px;width: 300px;font-size:1.5em;}
-            .tt-menu { width:300px; }
-            span.twitter-typeahead .tt-suggestion {padding: 10px 20px;	border-bottom:#CCC 1px solid;cursor:pointer;}
-            span.twitter-typeahead .tt-suggestion:last-child { border-bottom:0px; }
-            .demo-label {font-size:1.5em;color: #686868;font-weight: 500;}
-            .bgcolor {max-width: 440px;height: 200px;background-color: #c3e8cb;padding: 40px 70px;border-radius:4px;margin:20px 0px;}
-
-        </style>
-
+        <link rel="stylesheet" href="{% static 'css/amsify.suggestags.css' %}">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     </head>
@@ -35,8 +18,8 @@
                    <h2 class="display-6"><b>Encontrar Repositórios Destaques em: CSS, HTML, Python, JS, Flutter e outras!</b></h2>
                    <hr class="rounded">
                    <br>
-                   <input type="text" value="" id="tags-input" data-role="tagsinput" />
-                   <br><br>
+                   <input id="lang_input" type="text" class="form-control" name="languages" placeholder="Digite Aqui">
+                   <br>
                    <button id="btn_search" onclick="get_repos()" class="btn btn-outline-danger" style="border-bottom-color: rgb(239, 0, 68); --button-hover-bg: rgb(239, 0, 68)">Encontrar Repositórios!</button>
                </div>
             </div>
@@ -63,6 +46,8 @@
 </html>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"></script>
+<script src="{% static 'js/jquery.amsify.suggestags.js' %}"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 
@@ -95,13 +80,13 @@
         $('.repo_datatable thead th').each( function (){
             var title = $(this).text();
             var input = document.querySelectorAll('input');
-                for(i=0; i<input.length; i++){
-                    if((input[i].getAttribute('placeholder').length-3)<=0)
-                        input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-1));
-                    else
-                        input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-3));
+            for(i=1; i<input.length; i++){  // Starts on one to pass the first input object
+                if((input[i].getAttribute('placeholder').length-3)<=0)
+                    input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-1));
+                else
+                    input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-3));
 
-                }
+            }
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'"/>');
         });
 
@@ -183,7 +168,7 @@
         var languages = []
 
         $.ajax({type: "POST",
-                url: "find/",
+                url: "search/",
                 dataType: 'json',
                 data: {'dict_edit_flx': languages,
                        'csrfmiddlewaretoken': '{{ csrf_token|safe }}' },
@@ -198,31 +183,10 @@
         document.getElementById('teste').innerHTML = '<div> Envia por ajax {{ header }} </div>'
     }
 
-</script>
+    $(document).ready(function(){
+       $('input[name="languages"]').amsifySuggestags({
+        suggestions: {{ languages|safe }},
+       });
+    });
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
-
-<script>
-    // Responsible by creating tags input
-    let languages = {{ languages|safe }};  // list with all allowed and registered languages
-	var langs = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('lang'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        prefetch: {
-            url: 'languages/',
-            filter: function(list) { return $.map(list, function(lang) { return { lang: lang } }); }
-        }
-	});
-	langs.initialize();
-
-	$('#tags-input').tagsinput({
-	  typeaheadjs: {
-		name: 'languages',
-		displayKey: 'lang',
-		valueKey: 'lang',
-		source: languages
-	  }
-	});
 </script>
