@@ -7,7 +7,7 @@ class TbLanguages(models.Model):
     ['CSS', 'HTML', 'JavaScript', 'Python', 'Flutter']
     Instead storing multiple times each language as char on TbGitRepository.
     """
-    language = models.CharField(max_length=10)
+    language = models.CharField(max_length=25)
 
 
 class TbGitRepository(models.Model):

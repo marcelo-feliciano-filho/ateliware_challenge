@@ -351,7 +351,7 @@
 
             setInputValue: function() {
               $(this.selector).val(this.tagNames.join(','));
-              this.printValues();
+              //this.printValues();
             },
 
             fixCSS : function() {
@@ -364,7 +364,8 @@
             },
 
             printValues : function() {
-              console.info(this.tagNames, $(this.selector).val());
+                return
+                //console.info(this.tagNames, $(this.selector).val());
             },
 
             refresh : function(selector, method) {

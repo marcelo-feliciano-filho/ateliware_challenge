@@ -22,8 +22,7 @@ from ateliware_git_app.views import ViewRepositories, update_repo_by_ajax, list_
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', ViewRepositories.as_view(), name='ateliware'),
-    path('search/', update_repo_by_ajax, name='search_repositories'),
-    path('languages/', list_languages, name='languages_json')
+    path('search/', update_repo_by_ajax, name='search_repositories')
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

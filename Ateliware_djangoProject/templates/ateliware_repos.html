@@ -165,22 +165,24 @@
     // JS responsible by creating ajax requisition to back-end
     function get_repos(){
 
-        var languages = []
+        var list_lang = $('#lang_input').val().split(',');  // Languages chosen by user
+        console.log(list_lang)
 
-        $.ajax({type: "POST",
-                url: "search/",
-                dataType: 'json',
-                data: {'dict_edit_flx': languages,
-                       'csrfmiddlewaretoken': '{{ csrf_token|safe }}' },
-        }).done(function (data){
-                repositories_dt = data['repositories'];
-                new_repositories = data['new_found'];
-                update_dt_table('tb_repo')  // Initializes tb_repo with data for tb_repo
-                update_dt_table('tb_nw_repo')  // Initializes tb_repo with data for tb_nw_repo
-                configure_tables()  // reconfigures tables
-        })
+        if (list_lang.length > 0) {
+            $.ajax({type: "GET",
+                    url: "search/",
+                    dataType: 'json',
+                    data: {'lang': JSON.stringify({'list_lang': list_lang}),
+                           'csrfmiddlewaretoken': '{{ csrf_token|safe }}'},
+            }).done(function (data){
+                    repositories_dt = data['repositories'];
+                    new_repositories = data['new_found'];
+                    update_dt_table('tb_repo')  // Initializes tb_repo with data for tb_repo
+                    update_dt_table('tb_nw_repo')  // Initializes tb_repo with data for tb_nw_repo
+                    configure_tables()  // reconfigures tables
+            })
+        }
 
-        document.getElementById('teste').innerHTML = '<div> Envia por ajax {{ header }} </div>'
     }
 
     $(document).ready(function(){

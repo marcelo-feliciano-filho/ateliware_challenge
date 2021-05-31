@@ -30,13 +30,13 @@ class GitAPI:
         for lang in self.languages:  # For each language in allowed languages list
 
             # Searches by repositories and sorts by number of stars to get highlights ones
-            repositories = self.git_api.search_repositories(lang.language, sort='stars')
+            repositories = self.git_api.search_repositories(lang, sort='stars')
             index = 0  # Resets or initilizes the number of new repositories found by API
             while index < 3:  # While number of new repositories found is minor than 3
                 for repository in repositories:  # For each found repository
 
                     # Creates a dictionary for repository main atributes except name
-                    dict_repo = {'id_fk_lang': lang.id,
+                    dict_repo = {'id_fk_lang': self.tb_lang.objects.filter(language=lang),
                                  'repo_url': repository.url,
                                  'repo_stars': repository.stargazers_count,
                                  'repo_commits': repository.get_commits().totalCount,
