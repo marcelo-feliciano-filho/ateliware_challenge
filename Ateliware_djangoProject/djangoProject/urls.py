@@ -17,11 +17,12 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from ateliware_git_app.views import ViewRepositories
+from ateliware_git_app.views import ViewRepositories, update_repo_by_ajax
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', ViewRepositories.as_view(), name='ateliware'),
+    path('find/', update_repo_by_ajax, name='find_repositories')
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

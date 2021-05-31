@@ -5,155 +5,174 @@
     <head>
         <meta charset="UTF-8">
         <title>Hire Me!</title>
+
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-
     </head>
     <body>
-        <div class="container" style="child-align: middle">
-            <div class="row mb-4">
-               <div class="col-lg-8 mx-auto text-center" >
-                   <h2 class="display-6"><b>Encontrar Repositórios Destaques Em: CSS, HTML, Python, JS e Flutter</b></h2>
-                   <hr class="rounded">
-                   <br>
-                   <button id="btn_search" onclick="get_repos()" class="btn btn-outline-danger" style="border-bottom-color: rgb(239, 0, 68); --button-hover-bg: rgb(239, 0, 68)">Encontrar Repositórios!</button>
-               </div>
-            </div>
 
+        <div class="row mb-4">
+           <div class="col-lg-8 mx-auto text-center" >
+               <h2 class="display-6"><b>Encontrar Repositórios Destaques Em: CSS, HTML, Python, JS e Flutter</b></h2>
+               <hr class="rounded">
+               <br>
+               <button id="btn_search" onclick="get_repos()" class="btn btn-outline-danger" style="border-bottom-color: rgb(239, 0, 68); --button-hover-bg: rgb(239, 0, 68)">Encontrar Repositórios!</button>
+           </div>
+        </div>
+
+        <div class="container" style="child-align: middle">
             <!-- First Table: New Github repositories -->
             <div class="row"  style="alignment: center" >
-                <div class="container mb-4 mt-4" style="max-width: 90vw ; border-radius: 10%;">
-                    <h2 class="title-3" style="align-content: center">Os cinco Repositórios mais incríveis do momento!</h2>
-                    <table id = "tb_nw_repo" class=" table-responsive text-nowrap table-sm nw_repo_datatable table table-bordered"  style="border-radius: 10px; padding: 0%; font-size: 12px; " >
-                        <thead>
-                            <tr id = "header">
-                                {% if header %}
-                                    {% for h in header %}
-                                        <th scope="col" style="text-align: center; font-size: 12px; color: blanchedalmond; background-color: rgb(239, 0, 68);">{{ h }}</th>
-                                    {% endfor %}
-                                {% endif %}
-                            </tr>
-                        </thead>
-                        <tbody id = "nw_data">
-                            {% if sis %}
-                                {% for rw in sis %}
-                                    <tr>
-                                        {% for dt in rw %}
-                                            <td style="text-align:center; max-width:25vw; min-width: 3vw; color: blanchedalmond; background-color: rgb(239, 0, 68);">{{dt}}</td>
-                                        {% endfor %}
-                                    </tr>
-                                {% endfor %}
-                            {% endif %}
-                        </tbody>
-                        <tfoot class="thead-light">
-                            <tr id = "footer">
-                                {% if header %}
-                                    {% for h in header %}
-                                        <th scope="col" style="text-align: center; background-color: rgb(235, 235, 235);" >{{ h }}</th>
-                                    {% endfor %}
-                                {% endif %}
-                            </tr>
-                        </tfoot>
-                    </table>
+                <div class="container mb-4 mt-4" style="max-width: 90vw; max-height: 75vh; overflow: hidden;">
+                    <h2 class="title-3" style="align-content: center">Os Repositórios mais incríveis do momento!</h2>
+                    <table id="tb_nw_repo" class="table-responsive text-nowrap table-sm nw_repo_datatable table table-bordered" style="border-radius: 5%; padding: 0%; font-size: 11px"></table>
                 </div>
             </div>
             <!-- Second Table: registered Github repositories -->
             <div class="row"  style="alignment: center;" >
-                <div class="container mb-4 mt-4" style="max-width: 90vw; border-radius: 10%;">
+                <div class="container mb-4 mt-4" style="max-width: 90vw; max-height: 75vh; overflow: hidden;">
                     <h2 class="title-3">Repositórios incríveis já cadastrados</h2>
-                    <table id = "tb_repo" class=" table-responsive text-nowrap table-sm repo_datatable table table-bordered"  style="border-radius: 10px; padding: 0%; font-size: 12px;" >
-                        <thead>
-                            <tr id = "header_repo">
-                                {% if header %}
-                                    {% for h in header %}
-                                        <th scope="col" style="text-align: center; font-size: 1px; color: blanchedalmond; background-color: rgb(239, 0, 68);">{{ h }}</th>
-                                    {% endfor %}
-                                {% endif %}
-                            </tr>
-                        </thead>
-                        <tbody id = "old_data">
-                            {% if sis %}
-                                {% for rw in sis %}
-                                    <tr>
-                                        {% for dt in rw %}
-                                            <td style="text-align:center; max-width:25vw; min-width: 3vw;background-color: rgb(238, 238, 238);">{{dt}}</td>
-                                        {% endfor %}
-                                    </tr>
-                                {% endfor %}
-                            {% endif %}
-                        </tbody>
-                        <tfoot class="thead-light">
-                            <tr id = "footer_repo">
-                                {% if header %}
-                                    {% for h in header %}
-                                        <th scope="col" style="text-align: center; background-color: rgb(235, 235, 235);" >{{ h }}</th>
-                                    {% endfor %}
-                                {% endif %}
-                            </tr>
-                        </tfoot>
-                    </table>
+                    <table id="tb_repo" class="table-responsive text-nowrap table-sm repo_datatable table table-bordered" style="border-radius: 5%; padding: 0%; font-size: 11px;" ></table>
                 </div>
             </div>
+            <div id="teste"></div>
         </div>
     </body>
+    <footer>
+
+    </footer>
 </html>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 
-<script>
+<script>  // Such JS configures datatables language and search boxes
 
-    let en_pack = {"lengthMenu": " Present  _MENU_ repositores per page.",
-                   "zeroRecords": "There are no Repositories yet, search for it!",
-                   "info": "Showing _PAGE_ from _PAGES_ pages",
-                   "infoEmpty": "Showing 0 for 0 of 0 Repositories",
-                   "search": "Search:",
-                   "paginate":{ "next": "Next", "previous":"Previous"},
-                   "infoFiltered": "(Filtering de   _MAX_ Repositories)",
-                   }
+    var repositories_dt = {{ repositories|safe }};  // Repositories data to be shown on repo datatable
 
-    var table_nw = $('#tb_repo').DataTable({ "language": en_pack });
+    function configure_tables(){
+        let en_pack = {"lengthMenu": "Apresentar  _MENU_ Repositórios por página.",
+               "zeroRecords": "Pressione o botão acima e encontre os repositórios destaque",
+               "info": "Mostrando _PAGE_ de _PAGES_ páginas",
+               "infoEmpty": "Mostrando 0 para 0 de 0 Repositórios",
+               "search": "Pesquisar:",
+               "paginate":{ "next":"Próximo", "previous":"Anterior"},
+               "infoFiltered": "(Filtrando de   _MAX_ Repositórios)",
+               }
 
-    table_nw.columns().every( function () {
-        var that = this;
-        $('input', this.header() ).on( 'keyup change', function () {
-            if ( that.search() !== this.value ) {
-                that.search( this.value ).draw();
-            }
+        var table_nw = $('#tb_repo').DataTable({ "language": en_pack });
+
+        table_nw.columns().every( function () {
+            var that = this;
+            $('input', this.header() ).on( 'keyup change', function () {
+                if ( that.search() !== this.value ) {
+                    that.search( this.value ).draw();
+                }
+            });
         });
-    });
 
-    $('.repo_datatable thead th').each( function (){
-        var title = $(this).text();
-        var input = document.querySelectorAll('input');
-            for(i=0; i<input.length; i++){
-                if((input[i].getAttribute('placeholder').length-3)<=0)
-                    input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-1));
-                else
-                    input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-3));
+        $('.repo_datatable thead th').each( function (){
+            var title = $(this).text();
+            var input = document.querySelectorAll('input');
+                for(i=0; i<input.length; i++){
+                    if((input[i].getAttribute('placeholder').length-3)<=0)
+                        input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-1));
+                    else
+                        input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-3));
 
-            }
-        $(this).html('<input class="form-control" type="text" placeholder="'+title+'"/>');
-    });
-
-    var table = $('#tb_nw_repo').DataTable({"language": en_pack});
-
-    table.columns().every( function () {
-        var that = this;
-        $('input', this.header() ).on( 'keyup change', function () {
-            if ( that.search() !== this.value ) {
-                that.search( this.value ).draw();
-            }
+                }
+            $(this).html('<input class="form-control" type="text" placeholder="'+title+'"/>');
         });
-    });
 
+        var table = $('#tb_nw_repo').DataTable({"language": en_pack});
 
-</script>
-
-<script>
-    function get_repos(){
-        console.log('Envia por ajax')
+        table.columns().every( function () {
+            var that = this;
+            $('input', this.header() ).on( 'keyup change', function () {
+                if ( that.search() !== this.value ) {
+                    that.search( this.value ).draw();
+                }
+            });
+        });
     }
-</script>
 
+    // Config JS code, to update tables and configure them
+    function update_dt_table(id_tb){  // This function fills datatables with data after AJAX call
+
+        var tb_data = '';
+
+        if (id_tb == 'tb_repo'){  // If it´s the tb with all repositores eer searched
+
+            tb_data = `<tbody id = "old_data">
+                           {% if repositories %}
+                               {% for rw in repositories %}
+                                   <tr>
+                                       {% for dt in rw %}
+                                           <td style="text-align:center; max-width:25vw; min-width: 3vw;background-color: rgb(238, 238, 238);">{{dt}}</td>
+                                       {% endfor %}
+                                   </tr>
+                               {% endfor %}
+                           {% endif %}
+                       </tbody>`;
+        } else {  // Otherwise it must be the new repositories datatable
+            tb_data = `<tbody id = "old_data">
+                           {% if new_found %}
+                               {% for rw in new_found %}
+                                   <tr>
+                                       {% for dt in rw %}
+                                           <td style="text-align:center; max-width:25vw; min-width: 3vw;background-color: rgb(238, 238, 238);">{{dt}}</td>
+                                       {% endfor %}
+                                   </tr>
+                               {% endfor %}
+                           {% endif %}
+                       </tbody>`;
+        }
+
+        // Updates datatables by innerHTML method, both have the same header and footer
+        document.getElementById(id_tb).innerHTML = `
+            <thead>
+                <tr id = "header_repo">
+                    {% if header %}
+                        {% for h in header %}
+                            <th scope="col" style="text-align: center; color: blanchedalmond; background-color: rgb(239, 0, 68);">{{ h }}</th>
+                        {% endfor %}
+                    {% endif %}
+                </tr>
+            </thead>
+            ${tb_data}
+            <tfoot class="thead-light">
+                <tr id = "footer_repo">
+                    {% if header %}
+                        {% for h in header %}
+                            <th scope="col" style="text-align: center; background-color: rgb(235, 235, 235);" >{{ h }}</th>
+                        {% endfor %}
+                    {% endif %}
+                </tr>
+            </tfoot>`;
+    }
+
+    update_dt_table('tb_repo')  // Initializes tb_repo with data for tb_repo
+    update_dt_table('tb_nw_repo')  // Initializes tb_repo with data for tb_nw_repo
+    configure_tables()
+
+
+    // JS responsible by creating ajax requisition to back-end
+    function get_repos(){
+
+        var languages = []
+
+        $.ajax({type: "POST",
+                url: "find/",
+                dataType: 'json',
+                data: {'dict_edit_flx': languages,
+                       'csrfmiddlewaretoken': '{{ csrf_token|safe }}' },
+        }).done(function (data){
+                alert(data['dt']);
+                location.reload();
+        })
+
+        document.getElementById('teste').innerHTML = '<div> Envia por ajax {{ header }} </div>'
+    }
+
+</script>
