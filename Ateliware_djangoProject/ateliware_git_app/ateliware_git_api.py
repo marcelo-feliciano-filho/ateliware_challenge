@@ -1,6 +1,7 @@
 # Imports necessary tables and Github API class
 from .models import TbLanguages, TbGitRepository
 from github import Github
+from datetime import datetime as dt
 # PyGitHub documentation: https://pygithub.readthedocs.io/en/latest/index.html
 
 
@@ -18,8 +19,9 @@ class GitAPI:
         self.git_api = Github()  # Object with Github API
         self.tb_repo = TbGitRepository  # TbGitRepository object
         self.tb_lang = TbLanguages  # TbLanguages object
-        # Creates a list only with registered (allowed) languages
-        self.allowed_lang = [lang[1] for lang in self.tb_lang.objects.all().values_list()]  # All allowed languages
+        # Creates a dictionary only with registered (allowed) languages
+        self.dict_lang = {lang[0]: lang[1] for lang in self.tb_lang.objects.all().values_list()}
+        self.allowed_lang = [val for val in self.dict_lang.values()]  # All allowed languages
         self.languages = [lang for lang in lang_list if lang in self.allowed_lang]  # Languages chosen by user
 
     def cad_or_up_repo(self):
@@ -32,26 +34,32 @@ class GitAPI:
             # Searches by repositories and sorts by number of stars to get highlights ones
             repositories = self.git_api.search_repositories(lang, sort='stars')
             index = 0  # Resets or initilizes the number of new repositories found by API
-            while index < 3:  # While number of new repositories found is minor than 3
-                for repository in repositories:  # For each found repository
 
-                    # Creates a dictionary for repository main atributes except name
-                    dict_repo = {'id_fk_lang': self.tb_lang.objects.filter(language=lang),
-                                 'repo_url': repository.url,
-                                 'repo_stars': repository.stargazers_count,
-                                 'repo_commits': repository.get_commits().totalCount,
-                                 'repo_watchers': repository.watchers_count,
-                                 'repo_branches': repository.get_branches().totalCount,
-                                 'repo_forks': repository.get_forks().totalCount,
-                                 'repo_issues': repository.open_issues_count,
-                                 'repo_up_at': repository.updated_at}
+            for repository in repositories:  # For each found repository
 
-                    # Verifies if current repository is registered on database and update or create
-                    obj, created = self.tb_repo.objects.update_or_create(repo_name=repository.name, defaults=dict_repo)
+                # Creates a dictionary for repository main atributes except name
+                dict_repo = {'id_fk_lang': self.tb_lang.objects.filter(language=lang).first(),
+                             'repo_url': repository.html_url,
+                             'repo_stars': repository.stargazers_count,
+                             'repo_commits': repository.get_commits().totalCount,
+                             'repo_watchers': repository.watchers_count,
+                             'repo_branches': repository.get_branches().totalCount,
+                             'repo_forks': repository.get_forks().totalCount,
+                             'repo_issues': repository.open_issues_count,
+                             'repo_up_at': repository.updated_at}
 
-                    if created:  # If it was created, otherwise it updates existent register
-                        search_repos.append(dict_repo)  # appends dict_repo to search list
-                        index += 1  # adds one repository found by index status (3 by language)
+                # Verifies if current repository is registered on database and update or create
+                obj, created = self.tb_repo.objects.update_or_create(repo_name=repository.name, defaults=dict_repo)
+
+                if created:  # If it was created, otherwise it updates existent register
+                    # appends dict_repo to search list
+                    search_repos.append([obj.repo_name, self.dict_lang[obj.id_fk_lang_id], obj.repo_url, obj.repo_stars,
+                                        obj.repo_commits, obj.repo_watchers, obj.repo_branches, obj.repo_forks,
+                                        obj.repo_issues, dt.strftime(obj.repo_up_at, '%d/%m/%Y - %Hh%M')])
+                    index += 1  # adds one repository found by index status (3 by language)
+                    if index == 3:  # Whenever the index is equals to three,
+                        break  # Breaks the loop
+
 
         # Returns all five new registered repositories main data
         return search_repos
@@ -63,4 +71,5 @@ class GitAPI:
         Output: List
             list containing all repositories and their metadata
         """
-        return [repo for repo in self.tb_repo.objects.all().values_list()]
+        return [[repo[2], self.dict_lang[repo[1]], repo[3], repo[4], repo[5], repo[6], repo[7], repo[8], repo[9],
+                 dt.strftime(repo[10], '%d/%m/%Y - %Hh%M')] for repo in self.tb_repo.objects.all().values_list()]

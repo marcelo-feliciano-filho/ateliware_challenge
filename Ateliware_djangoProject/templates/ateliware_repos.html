@@ -6,12 +6,23 @@
         <meta charset="UTF-8">
         <title>Hire Me!</title>
 
+
         <link rel="stylesheet" href="{% static 'css/amsify.suggestags.css' %}">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     </head>
     <body>
 
+        <!-- Ateliware logo and my name/linkedin link -->
+        <nav class="navbar fixed-top navbar-light bg-light">
+            <a class="navbar-brand" href="https://ateliware.com/" target="_blank">
+                <img src="{% static 'img/ateliware_logo.png' %}" width="149" height="50" alt="">
+            </a>
+            <a class="navbar-brand" href="https://www.linkedin.com/in/marcelo-feliciano-filho-731504182/" target="_blank" style="margin-left: 72vw">
+                <img src="{% static 'img/linkedIn-logo.png' %}" width="181" height="50" alt="">
+            </a>
+        </nav>
+        <br><br><br><br>
         <div class="container" style="child-align: middle">
             <div class="row mb-4" style="max-width: 100vw; alignment: center">
                <div class="col-lg-8 mx-auto text-center" >
@@ -32,7 +43,7 @@
             </div>
             <!-- Second Table: registered Github repositories -->
             <div class="row"  style="alignment: center;" >
-                <div class="container mb-4 mt-4" style="max-width: 90vw; max-height: 75vh; overflow: hidden;">
+                <div class="container mb-4 mt-4" style="max-width: 90vw; max-height: 105vh; overflow-x: hidden;">
                     <h2 class="title-3">Repositórios incríveis já cadastrados</h2>
                     <table id="tb_repo" class="table-responsive text-nowrap table-sm repo_datatable table table-bordered" style="border-radius: 5%; padding: 0%; font-size: 11px;" ></table>
                 </div>
@@ -48,6 +59,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"></script>
 <script src="{% static 'js/jquery.amsify.suggestags.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 
@@ -57,7 +69,7 @@
     var new_repositories = [];
 
     function configure_tables(){
-        let en_pack = {"lengthMenu": "Apresentar  _MENU_ Repositórios por página.",
+        let pt_pack = {"lengthMenu": "Apresentar  _MENU_ Repositórios por página.",
                "zeroRecords": "Pressione o botão acima e encontre os repositórios destaque",
                "info": "Mostrando _PAGE_ de _PAGES_ páginas",
                "infoEmpty": "Mostrando 0 para 0 de 0 Repositórios",
@@ -66,7 +78,11 @@
                "infoFiltered": "(Filtrando de   _MAX_ Repositórios)",
                }
 
-        var table_nw = $('#tb_repo').DataTable({ "language": en_pack });
+        var table_nw = $('#tb_repo').DataTable({
+            "language": pt_pack,
+            "paging": true,
+            "searching": true
+        });
 
         table_nw.columns().every( function () {
             var that = this;
@@ -85,12 +101,15 @@
                     input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-1));
                 else
                     input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-3));
-
             }
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'"/>');
         });
 
-        var table = $('#tb_nw_repo').DataTable({"language": en_pack});
+        var table = $('#tb_nw_repo').DataTable({
+            "language": pt_pack,
+            "paging": true,
+            "searching": true
+        });
 
         table.columns().every( function () {
             var that = this;
@@ -102,35 +121,42 @@
         });
     }
 
+    // Function that Creates a string for inserting on tables inner html
+    function create_datatable(datatable) {
+        var html_data = '';
+        for (row in datatable){  // for each wor in datatable
+            html_data += '<tr>'
+            for (dt in datatable[row]) {  // for each data in row
+                if (dt)
+                if (dt == 0) {  // If is the first item, set the repository link on datatable
+                    html_data += `<td style="text-align:center; background-color: rgb(238, 238, 238);"><a href="${datatable[row][2]}" target="_blank">${datatable[row][dt]}</a></td>`;
+                } else if (dt == 2) {  // Goes to next, without inserting on table
+                    continue
+                } else if (dt == 3) {  // Creates the star icon before number of stars
+                    html_data += `<td style="text-align:center; background-color: rgb(238, 238, 238);"> &#11088; ${datatable[row][dt]}</td>`;
+                } else {
+                    html_data += `<td style="text-align:center; background-color: rgb(238, 238, 238);">${datatable[row][dt]}</td>`;
+                }
+            }
+            html_data += '</tr>'
+        }
+        return html_data
+    }
+
+
     // Config JS code, to update tables and configure them
     function update_dt_table(id_tb){  // This function fills datatables with data after AJAX call
 
         var tb_data = '';
 
         if (id_tb == 'tb_repo'){  // If it´s the tb with all repositories eer searched
-
             tb_data = `<tbody id = "old_data">
-                           {% if repositories %}
-                               {% for rw in repositories %}
-                                   <tr>
-                                       {% for dt in rw %}
-                                           <td style="text-align:center; max-width:25vw; min-width: 3vw;background-color: rgb(238, 238, 238);">{{dt}}</td>
-                                       {% endfor %}
-                                   </tr>
-                               {% endfor %}
-                           {% endif %}
+                           ${create_datatable(repositories_dt)}
                        </tbody>`;
+
         } else {  // Otherwise it must be the new repositories datatable
-            tb_data = `<tbody id = "old_data">
-                           {% if new_found %}
-                               {% for rw in new_found %}
-                                   <tr>
-                                       {% for dt in rw %}
-                                           <td style="text-align:center; max-width:25vw; min-width: 3vw;background-color: rgb(238, 238, 238);">{{dt}}</td>
-                                       {% endfor %}
-                                   </tr>
-                               {% endfor %}
-                           {% endif %}
+            tb_data = `<tbody id = "new_data">
+                           ${create_datatable(new_repositories)}
                        </tbody>`;
         }
 
@@ -165,7 +191,6 @@
     function get_repos(){
 
         var list_lang = $('#lang_input').val().split(',');  // Languages chosen by user
-        console.log(list_lang)
 
         if (list_lang.length > 0) {
             $.ajax({type: "GET",
@@ -173,15 +198,20 @@
                     dataType: 'json',
                     data: {'lang': JSON.stringify({'list_lang': list_lang}),
                            'csrfmiddlewaretoken': '{{ csrf_token|safe }}'},
-            }).done(function (data){
+            }).done(function (data){  // Receives JsonResponse from python
+                console.log(data['new_found'])
+                console.log(Object.keys(data['new_found']).includes('message'))
+                if (Object.keys(data['new_found']).includes('message')){  // If there is a error message, alerts user
+                    alert(`O número máximo de requisições permitidas pela API do GitHub (5,000) por hora foi excedido.\n\nMensagem de Erro: ${data['new_found']['message']}.\n\nSaiba mais em: ${data['new_found']['documentation_url']}.`)  // calls pop-up as a toast
+                } else {  // It there is no error message in new_found data, tables are updated
                     repositories_dt = data['repositories'];  // Updates global js variable with all repositories data
                     new_repositories = data['new_found'];  // Updates global js variable with new repositories data
                     update_dt_table('tb_repo')  // Initializes tb_repo with data for tb_repo
                     update_dt_table('tb_nw_repo')  // Initializes tb_repo with data for tb_nw_repo
-                    configure_tables()  // reconfigures tables
+                    // configure_tables()  // reconfigures tables
+                }
             })
         }
-
     }
 
     $(document).ready(function(){

@@ -31,8 +31,12 @@ ALLOWED_HOSTS = ['*']  # Allows any host
 
 # Application definition
 STATIC_ROOT = ''
+
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = (ospath.join('static'), )
+
+USE_TZ = False
 
 INSTALLED_APPS = [
     'ateliware_git_app',
