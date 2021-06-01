@@ -6,6 +6,23 @@
         <meta charset="UTF-8">
         <title>Hire Me!</title>
 
+        <style>
+            .loader {
+                  border: 8px solid #A1A1A1;
+                  border-top: 8px solid rgb(239, 0, 68);
+                  border-radius: 50%;
+                  width: 50px;
+                  height: 50px;
+                  animation: spin 2s linear infinite;
+                  display: none;
+                  margin-left: auto;
+                  margin-right: auto;
+            }
+            @keyframes spin {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(360deg); }
+            }
+        </style>
 
         <link rel="stylesheet" href="{% static 'css/amsify.suggestags.css' %}">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
@@ -14,11 +31,11 @@
     <body>
 
         <!-- Ateliware logo and my name/linkedin link -->
-        <nav class="navbar fixed-top navbar-light bg-light">
-            <a class="navbar-brand" href="https://ateliware.com/" target="_blank">
+        <nav class="navbar fixed-top navbar-light bg-light" style="max-height: 75px">
+            <a class="navbar-brand" href="https://ateliware.com/" target="_blank" style="align-self: baseline">
                 <img src="{% static 'img/ateliware_logo.png' %}" width="149" height="50" alt="">
             </a>
-            <a class="navbar-brand" href="https://www.linkedin.com/in/marcelo-feliciano-filho-731504182/" target="_blank" style="margin-left: 72vw">
+            <a class="navbar-brand" href="https://www.linkedin.com/in/marcelo-feliciano-filho-731504182/" target="_blank" style="align-self: end">
                 <img src="{% static 'img/linkedIn-logo.png' %}" width="181" height="50" alt="">
             </a>
         </nav>
@@ -35,6 +52,7 @@
                </div>
             </div>
             <!-- First Table: New Github repositories -->
+            <div class="loader" id="loader" style="display: none"></div>
             <div class="row"  style="alignment: center" >
                 <div class="container mb-4 mt-4" style="max-width: 90vw; max-height: 75vh; overflow: hidden;">
                     <h2 class="title-3" style="align-content: center">Os Repositórios mais incríveis do momento!</h2>
@@ -67,6 +85,8 @@
 
     var repositories_dt = {{ repositories|safe }};  // Repositories data to be shown on repo datatable
     var new_repositories = [];
+    var table_nw = '';
+    var table = '';
 
     function configure_tables(){
         let pt_pack = {"lengthMenu": "Apresentar  _MENU_ Repositórios por página.",
@@ -133,7 +153,7 @@
                 } else if (dt == 2) {  // Goes to next, without inserting on table
                     continue
                 } else if (dt == 3) {  // Creates the star icon before number of stars
-                    html_data += `<td style="text-align:center; background-color: rgb(238, 238, 238);"> &#11088; ${datatable[row][dt]}</td>`;
+                    html_data += `<td style="text-align:center; background-color: rgb(238, 238, 238);">${datatable[row][dt]} &#11088;</td>`;
                 } else {
                     html_data += `<td style="text-align:center; background-color: rgb(238, 238, 238);">${datatable[row][dt]}</td>`;
                 }
@@ -185,13 +205,13 @@
 
     update_dt_table('tb_repo')  // Initializes tb_repo with data for tb_repo
     update_dt_table('tb_nw_repo')  // Initializes tb_repo with data for tb_nw_repo
-    configure_tables()
+    configure_tables()  // Configures datatables
 
     // JS responsible by creating ajax requisition to back-end
     function get_repos(){
 
         var list_lang = $('#lang_input').val().split(',');  // Languages chosen by user
-
+        $('#loader').show();
         if (list_lang.length > 0) {
             $.ajax({type: "GET",
                     url: "search/",
@@ -199,8 +219,6 @@
                     data: {'lang': JSON.stringify({'list_lang': list_lang}),
                            'csrfmiddlewaretoken': '{{ csrf_token|safe }}'},
             }).done(function (data){  // Receives JsonResponse from python
-                console.log(data['new_found'])
-                console.log(Object.keys(data['new_found']).includes('message'))
                 if (Object.keys(data['new_found']).includes('message')){  // If there is a error message, alerts user
                     alert(`O número máximo de requisições permitidas pela API do GitHub (5,000) por hora foi excedido.\n\nMensagem de Erro: ${data['new_found']['message']}.\n\nSaiba mais em: ${data['new_found']['documentation_url']}.`)  // calls pop-up as a toast
                 } else {  // It there is no error message in new_found data, tables are updated
@@ -210,6 +228,7 @@
                     update_dt_table('tb_nw_repo')  // Initializes tb_repo with data for tb_nw_repo
                     // configure_tables()  // reconfigures tables
                 }
+                $('#loader').hide()
             })
         }
     }

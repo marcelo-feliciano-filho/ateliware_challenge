@@ -60,7 +60,6 @@ class GitAPI:
                     if index == 3:  # Whenever the index is equals to three,
                         break  # Breaks the loop
 
-
         # Returns all five new registered repositories main data
         return search_repos
 
@@ -68,7 +67,7 @@ class GitAPI:
         """
         A method that returns all registered repositories
         Input: None
-        Output: List
+        Output: list
             list containing all repositories and their metadata
         """
         return [[repo[2], self.dict_lang[repo[1]], repo[3], repo[4], repo[5], repo[6], repo[7], repo[8], repo[9],
