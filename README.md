@@ -15,24 +15,14 @@ Instruções de Deploy [11] na AWS[8]:
 
 Requisitos propostos pela Ateliware:
 
-[1] Botão para buscar e armazenar os repositórios destaques de 5 linguagens à sua escolha.
-
-[2] Listar os repositórios encontrados.
-
-[3] Visualizar os detalhes de cada repositório.
-
-[4] Deve ser uma aplicação totalmente nova.
-
-[5] A solução deve estar em um repositório público do GitHub.
-
-[6] A aplicação deve armazenar as informações encontradas.
-
-[7] Utilizar PostgreSQL, MySQL ou SQL Server.
-
-[8] O deploy deve ser realizado, preferencialmente, no Heroku, AWS ou no Azure.
-
-[9] A aplicação precisa ter testes automatizados.
-
-[10] Preferenciamente dockerizar a aplicação. -- X
-
-[11] Por favor atualizar o readme da aplicação com passo a passo com instrução para subir o ambiente.
+1) Botão para buscar e armazenar os repositórios destaques de 5 linguagens à sua escolha;
+2) Listar os repositórios encontrados;
+3) Visualizar os detalhes de cada repositório;
+4) Deve ser uma aplicação totalmente nova;
+5) A solução deve estar em um repositório público do GitHub;
+6) A aplicação deve armazenar as informações encontradas;
+7) Utilizar PostgreSQL, MySQL ou SQL Server;
+8) O deploy deve ser realizado, preferencialmente, no Heroku, AWS ou no Azure;
+9) A aplicação precisa ter testes automatizados;
+10) Preferenciamente dockerizar a aplicação e
+11) Por favor atualizar o readme da aplicação com passo a passo com instrução para subir o ambiente.
