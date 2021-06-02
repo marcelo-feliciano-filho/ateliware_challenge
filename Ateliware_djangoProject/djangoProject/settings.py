@@ -91,6 +91,9 @@ DATABASES = {
         'PASSWORD': 'MA24@lu08',
         'HOST': 'localhost',
         'PORT': '5432',
+        'TEST': {
+            'NAME': 'test_db_ateliware',
+        },
     }
 }
 

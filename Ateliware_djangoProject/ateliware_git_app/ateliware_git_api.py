@@ -31,10 +31,10 @@ class GitAPI:
         """
         search_repos = list()  # Creates a list to store found objects from Github API
         for lang in self.languages:  # For each language in allowed languages list
-            # Searches by repositories and sorts by number of stars to get highlights ones
+            # Searches by repositories and sorts by number of stars to get most highlight ones
             repositories = self.git_api.search_repositories(lang, sort='stars')
 
-            for repository in repositories:  # For each found repository
+            for repository in repositories:  # For each repository found by API
 
                 # Creates a dictionary for repository main atributes except name
                 dict_repo = {'id_fk_lang': self.tb_lang.objects.filter(language=lang).first(),
@@ -55,7 +55,7 @@ class GitAPI:
                     search_repos.append([obj.repo_name, self.dict_lang[obj.id_fk_lang_id], obj.repo_url, obj.repo_stars,
                                         obj.repo_commits, obj.repo_watchers, obj.repo_branches, obj.repo_forks,
                                         obj.repo_issues, dt.strftime(obj.repo_up_at, '%d/%m/%Y - %Hh%M')])
-                    break  # Breaks the loop after finding a new repository
+                    break  # Breaks the loop after finding a new repository by language
 
         # Returns all five new registered repositories main data
         return search_repos
