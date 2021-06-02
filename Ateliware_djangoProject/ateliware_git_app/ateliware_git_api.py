@@ -2,6 +2,7 @@
 from .models import TbLanguages, TbGitRepository
 from github import Github
 from datetime import datetime as dt
+import pytz
 # PyGitHub documentation: https://pygithub.readthedocs.io/en/latest/index.html
 
 
@@ -16,7 +17,7 @@ class GitAPI:
         Outputs: class
             (Initialization)
         """
-        self.git_api = Github()  # Object with Github API
+        self.git_api = Github('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')  # Init Object Github API with auth token
         self.tb_repo = TbGitRepository  # TbGitRepository object
         self.tb_lang = TbLanguages  # TbLanguages object
         # Creates a dictionary only with registered (allowed) languages
@@ -28,12 +29,10 @@ class GitAPI:
         """
         This method finds five repositories (top three by language)
         """
-        search_repos = list()  # Creates a list to store five objects from Github API
+        search_repos = list()  # Creates a list to store found objects from Github API
         for lang in self.languages:  # For each language in allowed languages list
-
             # Searches by repositories and sorts by number of stars to get highlights ones
             repositories = self.git_api.search_repositories(lang, sort='stars')
-            index = 0  # Resets or initilizes the number of new repositories found by API
 
             for repository in repositories:  # For each found repository
 
@@ -46,9 +45,9 @@ class GitAPI:
                              'repo_branches': repository.get_branches().totalCount,
                              'repo_forks': repository.get_forks().totalCount,
                              'repo_issues': repository.open_issues_count,
-                             'repo_up_at': repository.updated_at}
+                             'repo_up_at': pytz.utc.localize(repository.updated_at)}
 
-                # Verifies if current repository is registered on database and update or create
+                # Verifies if current repository is registered on database and update or create (keeps DB updated)
                 obj, created = self.tb_repo.objects.update_or_create(repo_name=repository.name, defaults=dict_repo)
 
                 if created:  # If it was created, otherwise it updates existent register
@@ -56,9 +55,7 @@ class GitAPI:
                     search_repos.append([obj.repo_name, self.dict_lang[obj.id_fk_lang_id], obj.repo_url, obj.repo_stars,
                                         obj.repo_commits, obj.repo_watchers, obj.repo_branches, obj.repo_forks,
                                         obj.repo_issues, dt.strftime(obj.repo_up_at, '%d/%m/%Y - %Hh%M')])
-                    index += 1  # adds one repository found by index status (3 by language)
-                    if index == 3:  # Whenever the index is equals to three,
-                        break  # Breaks the loop
+                    break  # Breaks the loop after finding a new repository
 
         # Returns all five new registered repositories main data
         return search_repos
