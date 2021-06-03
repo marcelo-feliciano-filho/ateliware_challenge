@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-from os import path as ospath
+from os import environ, path as ospath
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,17 +80,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'djangoProject.wsgi.application'
 
 
-# Configurações de bancos de dados padrão, alterado de sqlit3 para postgresql
+# Database Config with environ variables (same keys in amazon and local PC)
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db_ateliware',
-        'USER': 'postgres',
-        'PASSWORD': 'MA24@lu08',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': environ['RDS_DB_NAME'],
+        'USER': environ['RDS_USERNAME'],
+        'PASSWORD': environ['RDS_PASSWORD'],
+        'HOST': environ['RDS_HOSTNAME'],
+        'PORT': environ['RDS_PORT'],
         'TEST': {
             'NAME': 'test_db_ateliware',
         },

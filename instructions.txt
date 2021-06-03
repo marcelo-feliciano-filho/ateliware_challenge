@@ -56,7 +56,20 @@ WARNING: Uploaded SSH public key for "aws-eb" into EC2 for region us-west-2.
 4. Avaliar o status da criação do ambiente: eb status
 5. Acrescentar o valor da chave CNAME à variável lista ALLOWED_HOSTS em settings.py
 6. Realizar deploy da aplicação: eb deploy
+7. Abrir console da AWS: eb console
+8. Configurar o banco de dados em: django-env -> configurations -> database
+9. Com o banco configurado, é possível criar o arquivo db-migrate.py contendo:
+container_commands:
+  01_migrate:
+    command: "django-admin.py migrate"
+    leader_only: true
+  02_createsuperuser:
+    command: "echo \"from django.contrib.auth.models import User; User.objects.create_superuser('Marcelo_admin', 'marcelo.feliciano.f@outlook.com', 'ateliware_hire_me!')\" | python manage.py shell" 
+    leader_only: true
+option_settings:
+  aws:elasticbeanstalk:application:environment:
+    DJANGO_SETTINGS_MODULE: ateliware_git_app.settings
 
-
+10. 
 
  
