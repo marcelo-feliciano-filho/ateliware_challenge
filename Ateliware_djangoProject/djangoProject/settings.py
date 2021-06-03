@@ -26,13 +26,13 @@ SECRET_KEY = 'django-insecure-cd!9h*mv9oeg!jo-6=*z!bax4s45yec9n2da#v=hn%eui4d(#3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']  # Allows any host
+# Allows AWS and local host
+ALLOWED_HOSTS = ['django-env.eba-jvpqcpzi.us-west-2.elasticbeanstalk.com', '127.0.0.1']
 
 
 # Application definition
-STATIC_ROOT = ''
-
-STATIC_URL = '/static/'
+PROJECT_DIR = ospath.dirname(ospath.abspath(__file__))  # Creates project directory
+STATIC_ROOT = ospath.join(PROJECT_DIR, 'static')  # changes static root based on project relative dir
 
 STATICFILES_DIRS = (ospath.join('static'), )
 

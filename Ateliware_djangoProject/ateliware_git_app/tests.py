@@ -8,13 +8,14 @@ class FunctionalTestCases(TestCase):
     Such class makes functional testes for front-end functionalities, for example pressing search repositories button
     """
     def setUp(self):
-        pass
+        self.browser = webdriver.Chrome()
 
     def test_home_page(self):
         """
         This test homepage oppening process
         """
-        pass
+        self.browser.get('http://127.0.0.1:8000')
+        self.assertIn('Encontrar Repositórios Destaques em: CSS, HTML, Python, JS, Flutter', self.browser.page_source)
 
     def test_search_btn(self):
         """

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse  # Used to send data to ajax.done() method
 from django.views import View
 from json import loads
@@ -41,3 +41,7 @@ def list_languages(request):
     This function returns a list with all allowed languages
     """
     return JsonResponse({'lang': GitAPI([]).allowed_lang})
+
+
+def github_oauth(request):
+    return redirect()

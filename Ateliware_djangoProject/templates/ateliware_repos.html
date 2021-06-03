@@ -240,7 +240,7 @@
                                'csrfmiddlewaretoken': '{{ csrf_token|safe }}'},
                 }).done(function (data){  // Receives JsonResponse from python
                     if (Object.keys(data['new_found']).includes('message')){  // If there is a error message, alerts user
-                        alert(`O número máximo de requisições permitidas pela API do GitHub (5,000) por hora foi excedido.\n\nMensagem de Erro: ${data['new_found']['message']}.\n\nSaiba mais em: ${data['new_found']['documentation_url']}.`)  // calls pop-up as a toast
+                        alert(`O número máximo de requisições permitidas pela API do GitHub por hora foi excedido.\n\nMensagem de Erro: ${data['new_found']['message']}.\n\nSaiba mais em: ${data['new_found']['documentation_url']}.`)  // calls pop-up as a toast
                     } else {  // It there is no error message in new_found data, tables are updated
                         repositories_dt = data['repositories'];  // Updates global js variable with all repositories data
                         new_repositories = data['new_found'];  // Updates global js variable with new repositories data
