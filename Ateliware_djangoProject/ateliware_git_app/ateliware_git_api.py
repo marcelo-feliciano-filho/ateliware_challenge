@@ -17,7 +17,7 @@ class GitAPI:
         Outputs: class
             (Initialization)
         """
-        self.git_api = Github('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')  # Init Object Github API with auth token
+        self.git_api = Github()  # Init Object Github API
         self.tb_repo = TbGitRepository  # TbGitRepository object
         self.tb_lang = TbLanguages  # TbLanguages object
         # Creates a dictionary only with registered (allowed) languages

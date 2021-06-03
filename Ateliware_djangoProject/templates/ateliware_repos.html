@@ -140,7 +140,7 @@
                     else
                         input[i].setAttribute('size',(input[i].getAttribute('placeholder').length-3));
                 }
-                $(this).html('<input class="form-control" type="text" placeholder="'+title+'"/>');
+                $(this).html('<input class="form-control" type="text" style="font-size: 11px; padding: 2px" placeholder="'+title+'"/>');
             });
 
             table_nw.columns().every( function () {
@@ -165,8 +165,6 @@
                         html_data += `<td style="text-align:center; background-color: rgb(238, 238, 238);"><a href="${datatable[row][2]}" target="_blank">${datatable[row][dt]}</a></td>`;
                     } else if (dt == 2) {  // Goes to next, without inserting on table
                         continue
-                    } else if (dt == 3) {  // Creates the star icon before number of stars
-                        html_data += `<td style="text-align:center; background-color: rgb(238, 238, 238);">${datatable[row][dt]} &#11088; </td>`;
                     } else {
                         html_data += `<td style="text-align:center; background-color: rgb(238, 238, 238);">${datatable[row][dt]}</td>`;
                     }
@@ -213,12 +211,16 @@
                     <tr id = "footer_repo">
                         {% if header %}
                             {% for h in header %}
-                                <th scope="col" style="text-align: center; background-color: rgb(235, 235, 235);" >{{ h }}</th>
+                                {% if h == "Estrelas" %}
+                                    <td style="text-align:center; background-color: rgb(238, 238, 238);"><b>{{ h }} &#11088;<b></td>
+                                {% else %}
+                                    <th scope="col" style="text-align: center; background-color: rgb(235, 235, 235);" >{{ h }}</th>
+                                {% endif %}
                             {% endfor %}
                         {% endif %}
                     </tr>
                 </tfoot>
-            </table>    `;
+            </table>`;
         }
 
         update_dt_table('tb_nw_repo', 'nw_table')  // Initializes tb_repo with data for tb_nw_repo
@@ -254,9 +256,7 @@
         }
 
         $(document).ready(function(){
-           $('input[name="languages"]').amsifySuggestags({
-            suggestions: {{ languages|safe }},
-           });
+           $('input[name="languages"]').amsifySuggestags({  suggestions: {{ languages|safe }} });
         });
 
     </script>

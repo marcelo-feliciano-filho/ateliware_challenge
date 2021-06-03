@@ -15,7 +15,7 @@ class ViewRepositories(View):
         git_api_class = GitAPI([])  # Initializes GitAPI class
         all_repos = git_api_class.get_all_repo()  # Get all previous foung apps
         langs = git_api_class.allowed_lang  # List with all allowed languages
-        head = ['Repositórios', 'Linguagens', 'Estrelas', 'Commits', 'Observadores', 'Branches', 'forks', 'Dúvidas',
+        head = ['Repositórios', 'Linguagens', 'Estrelas', 'Commits', 'Observadores', 'Branches', 'Forks', 'Dúvidas',
                 'Última Atualização']  # Datatables header seen in pt-br by front-end
 
         return render(request, 'ateliware_repos.html', {'repositories': all_repos, 'header': head, 'languages': langs})
