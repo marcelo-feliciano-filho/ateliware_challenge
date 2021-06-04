@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = False  # For some unknown reason, server error 500 occurs if DEBUG is False, TODO: Discover why
 
 if environ['ENVIRON'] == 'dev':
     DEBUG = True

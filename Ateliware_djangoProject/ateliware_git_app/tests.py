@@ -1,5 +1,6 @@
 from django.test import TestCase
 from selenium import webdriver
+from .ateliware_git_api import GitAPI
 # Automatic tests for this awesome project!
 
 
@@ -17,12 +18,6 @@ class FunctionalTestCases(TestCase):
         self.browser.get('http://127.0.0.1:8000')
         self.assertIn('Encontrar Repositórios Destaques em: CSS, HTML, Python, JS, Flutter', self.browser.page_source)
 
-    def test_search_btn(self):
-        """
-        This test is responsible by emulating a single language repository search by User
-        """
-        pass
-
 
 class UnitTestCases(TestCase):
     """
@@ -31,20 +26,14 @@ class UnitTestCases(TestCase):
 
     """
 
-    def test_home_template(self):
+    def test_github_class_template(self):
         """
         Makes a test to validate template
         """
-        pass
+        self.assertTrue(GitAPI([]).git_api)
 
     def test_database(self):
         """
         Tests database connection by selecting all values from a table
         """
-        pass
-
-    def test_git_api_init(self):
-        """
-        This test will open GitHub API and test random requisition
-        """
-        pass
+        self.assertTrue(GitAPI([]).tb_repo.objects.all().values_list())

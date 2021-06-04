@@ -34,3 +34,4 @@ A documentação oficial pode ser lida em: https://devcenter.heroku.com/articles
 	git commit -m 'Alterações para deploy da aplicação'
 	git push heroku master
 25. Executar a aplicação na web dentro da url permitida em [23] pelo comando: heroku ps:scale web=1
+26. Executar: Heroku open para abrir a aplicação no webbrowser.
