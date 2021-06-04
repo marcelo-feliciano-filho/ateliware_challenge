@@ -2,6 +2,7 @@
 from .models import TbLanguages, TbGitRepository
 from github import Github
 from datetime import datetime as dt
+from os import environ
 import pytz
 # PyGitHub documentation: https://pygithub.readthedocs.io/en/latest/index.html
 
@@ -17,6 +18,10 @@ class GitAPI:
         Outputs: class
             (Initialization)
         """
+        # Temporarily disabled
+        # self.token = environ['GITHUB_API_TOKEN']
+        # self.git_api = Github(self.token)  # Init Object Github API with token
+
         self.git_api = Github()  # Init Object Github API
         self.tb_repo = TbGitRepository  # TbGitRepository object
         self.tb_lang = TbLanguages  # TbLanguages object

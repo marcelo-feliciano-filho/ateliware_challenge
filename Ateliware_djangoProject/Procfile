@@ -1,2 +1,1 @@
-release: python manage.py migrate ateliware_git_app
-run: gunicorn djangoProject.wsgi
+web: gunicorn django_project.wsgi

@@ -25,7 +25,7 @@ A documentação oficial pode ser lida em: https://devcenter.heroku.com/articles
 20. Inserir variáveis de ambiente para controle da aplicação: ENVIRON, GITHUB_TOKEN e SECRET_KEY
 21. Criar arquivo Procfile:
 	release: python manage.py migrate ateliware_git_app
-	run: gunicorn djangoProject.wsgi
+	run: gunicorn django_project.wsgi
 22. Informar a versão de Python utilizada pelo arquivo runtime.txt: 
 	python-3.7.10
 23. Alterar a lista de hosts permitidos em settings.py: ALLOWED-HOSTS = ['ateliware-mff-dev.herokuapp.com'] 

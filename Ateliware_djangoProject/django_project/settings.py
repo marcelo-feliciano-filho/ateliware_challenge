@@ -22,13 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-cd!9h*mv9oeg!jo-6=*z!bax4s45yec9n2da#v=hn%eui4d(#3'
+SECRET_KEY = environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-# Allows AWS and local host
-ALLOWED_HOSTS = ['django-env.eba-jvpqcpzi.us-west-2.elasticbeanstalk.com', '127.0.0.1']
+if environ['ENVIRON'] == 'dev':
+    DEBUG = True
+
+# Allows HEROKU and local host
+ALLOWED_HOSTS = ['ateliware-mff-dev.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -59,7 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'djangoProject.urls'
+ROOT_URLCONF = 'django_project.urls'
 
 TEMPLATES = [
     {
@@ -78,7 +81,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'djangoProject.wsgi.application'
+WSGI_APPLICATION = 'django_project.wsgi.application'
 
 
 # Database Config with environ variables (same keys in amazon and local PC)

@@ -15,7 +15,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-djan
 10. Criar arquivo de configuração do django .ebextensions/django.config contendo:
 	option_settings:
     	    aws:elasticbeanstalk:container:python:
-                WSGIPath: djangoProject/wsgi.py
+                WSGIPath: django_project/wsgi.py
 11. Coletar arquivos estáticos do gerenciador do projeto django: python manage.py collectstatic (Digite 'yes')
 12. Desativar o ambiente virtual gerado: deactivate
 13. Iniciar o projeto por meio do ambiente gerado: eb init -p python-3.7 ateliware-dev-test-mff-aws
